@@ -17,11 +17,15 @@ func hello(w http.ResponseWriter, req *http.Request) {
 			panic("no file found")
 		}
 
-    fmt.Fprintf(w, string(mar))
+		w.Write(mar)
+
+    // fmt.Fprintf(w, string(mar))
 }
 
 
 func main() {
+		fmt.Println(os.Getpid())
+
 		var builder strings.Builder
 		builder.WriteString("../common/")
 		builder.WriteString(os.Args[1])
