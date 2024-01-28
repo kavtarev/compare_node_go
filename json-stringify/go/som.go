@@ -10,7 +10,7 @@ import (
 
 var myMap map[string]any
 
-func hello(w http.ResponseWriter, req *http.Request) {
+func res(w http.ResponseWriter, req *http.Request) {
 		mar, err := json.Marshal(myMap)
 
 		if err != nil {
@@ -18,7 +18,6 @@ func hello(w http.ResponseWriter, req *http.Request) {
 		}
 
 		w.Write(mar)
-
     // fmt.Fprintf(w, string(mar))
 }
 
@@ -40,12 +39,10 @@ func main() {
 		jErr := json.Unmarshal(file, &myMap)
 
 		if jErr != nil {
-			fmt.Println(jErr)
-			panic("cant parse")
+			panic(jErr)
 		}
 
-
-    http.HandleFunc("/", hello)
+    http.HandleFunc("/", res)
 
     http.ListenAndServe(":3000", nil)
 }
