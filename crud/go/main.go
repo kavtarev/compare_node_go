@@ -3,8 +3,9 @@ package main
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/lib/pq"
+	"log"
 	"net/http"
+	_ "github.com/lib/pq"
 )
 
 const (
@@ -15,74 +16,44 @@ const (
 	dbname   = "compare_node_go"
 )
 
+func run(res http.ResponseWriter, req *http.Request) {
+	res.Write([]byte("hi"))
+}
 
+func main () {
+	db, errCon := sql.Open("postgres", "postgres://postgres:postgres@localhost:5433/compare_node_go?sslmode=disable")
 
+	if errCon != nil {
+		log.Println("cant connect to db")
+	}
+	defer db.Close()
 
+	rows, qErr := db.Query("select count(1) from users")
 
+	if qErr != nil {
+		log.Println("query error", qErr)
+	}
+	defer rows.Close()
 
+	var res int;
 
+	for rows.Next() {
+		err := rows.Scan(&res)
 
+		if err != nil {
+			fmt.Println("scan error")
+		}
 
+		fmt.Println(6666, res)
+	}
 
+	// http.HandleFunc("/", run)
+	// log.Println("before init")
 
+	// err := http.ListenAndServe(":3000", nil)
 
+	// if err != nil {
+	// 	log.Println("not working")
+	// }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// func doSome(res http.ResponseWriter, req *http.Request) {
-// 	res.Write([]byte("do some"))
-// }
-
-// func main() {
-// 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s "+
-// 		"password=%s dbname=%s sslmode=disable",
-// 		host, port, user, password, dbname)
-
-// 	db, e := sql.Open("postgres", psqlInfo)
-
-// 	if e != nil {
-// 		fmt.Println(111)
-// 	}
-// 	defer db.Close()
-
-// 	errPing := db.Ping()
-
-// 	if errPing != nil {
-// 		fmt.Println(errPing)
-// 	}
-
-// 	res, err := db.Query("select count(1) from users;")
-
-// 	if err != nil {
-// 		fmt.Println(123)
-// 	}
-// 	defer res.Close()
-
-// 	var n []int
-
-// 	for res.Next() {
-// 		err :=res.Scan(&n)
-// 		if err != nil {
-// 			fmt.Println(8888, err)
-// 		}
-
-// 		fmt.Println(5566, n)
-// 	}
-
-// 	// http.HandleFunc("/", doSome)
-// 	// log.Println("up on 3000")
-// 	// log.Fatal(http.ListenAndServe(":3000", nil))
-
-// }
+}
