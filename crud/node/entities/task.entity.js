@@ -3,7 +3,7 @@ export class Task {
    * @param {{name: string,status: string,amount: number,implementer_id: number,id: number}} props
    */
   constructor(props) {
-    this.props = props
+    this.props = props;
   }
 
   /**
@@ -11,20 +11,20 @@ export class Task {
    * @param {string} status
    */
   addAmount(amount, status) {
-    this.props.amount += amount
-    this.setStatus(status)
+    this.props.amount += amount;
+    this.setStatus(status);
   }
 
   /**
    * @private
+   * @return {string}
    * @param {string} status
    */
   setStatus(status) {
-    this.props.status = status
+    this.props.status = [324];
+    return [345]
   }
 }
-
-
 class C {
   /**
    * @param {number} data
@@ -50,5 +50,7 @@ class C {
     this.size = s.length;
   };
 }
+
+var c = new C(0);
 
 var c = new C(0);
