@@ -10,7 +10,7 @@ async function run() {
   const fastify = Fastify({})
 
   // Declare a route
-  fastify.get('/', function (request, reply) {
+  fastify.get('/json-stringify', function (request, reply) {
     reply.send(json)
   })
 

@@ -11,7 +11,7 @@ async function run() {
 
   const app = express()
 
-  app.get('/', function (req, res) {
+  app.get('/json-stringify', function (req, res) {
     res.send(json)
   })
 

@@ -10,7 +10,9 @@ async function run() {
   const json = JSON.parse(data);
 
   createServer((req, res) => {
-    res.end(JSON.stringify(json))
+    if (req.url === 'json-stringify') {
+      res.end(JSON.stringify(json));
+    }
   }).listen(PORT, () => { console.log(`up on ${PORT}`) })
 
 }
