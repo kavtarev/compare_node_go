@@ -5,15 +5,19 @@ import (
 	"net/http"
 )
 
-func JsonStringifyResponse(w http.ResponseWriter, req *http.Request) {
-	var myMap map[string]any;
+func Closure(obj map[string]any) func (w http.ResponseWriter, req *http.Request) {
+	res := func (w http.ResponseWriter, req *http.Request) {
 
-	mar, err := json.Marshal(myMap)
-
-	if err != nil {
-		panic("cant stringify")
+		mar, err := json.Marshal(obj)
+	
+		if err != nil {
+			panic("cant stringify")
+		}
+	
+		w.Write(mar)
+		// fmt.Fprintf(w, string(mar))
 	}
 
-	w.Write(mar)
-	// fmt.Fprintf(w, string(mar))
+	return res
 }
+

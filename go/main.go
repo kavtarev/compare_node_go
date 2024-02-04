@@ -20,7 +20,9 @@ func main() {
 			panic(jErr)
 		}
 
-    http.HandleFunc("/json-stringify", handlers.JsonStringifyResponse)
+		jsonHandler := handlers.Closure(myMap)
+
+    http.HandleFunc("/json-stringify", jsonHandler)
 
     http.ListenAndServe(":3000", nil)
 }
