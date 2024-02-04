@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-func Closure(obj map[string]any) func (w http.ResponseWriter, req *http.Request) {
+func ClosureJson(obj map[string]any) func (w http.ResponseWriter, req *http.Request) {
 	res := func (w http.ResponseWriter, req *http.Request) {
 
 		mar, err := json.Marshal(obj)
