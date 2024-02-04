@@ -26,7 +26,7 @@ func main() {
 		fmt.Println(os.Getpid())
 
 		var builder strings.Builder
-		builder.WriteString("../common/")
+		builder.WriteString("../common/json")
 		builder.WriteString(os.Args[1])
 		builder.WriteString(".json")
 

@@ -5,7 +5,7 @@ import { join } from 'path';
 const PORT = 3000;
 
 async function run() {
-  const path = join('..', 'common', `${process.argv[2]}.json`);
+  const path = join('..', 'common', 'json', `${process.argv[2]}.json`);
   const data = await readFile(path);
   const json = JSON.parse(data);
 
