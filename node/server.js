@@ -17,7 +17,7 @@ async function run() {
       res.end(JSON.stringify(json));
     }
     if (req.url === '/download-files') {
-      createReadStream(filePath).pipe(res);
+      createReadStream(filePath, { highWaterMark: 50000 }).pipe(res);
     }
 
   }).listen(PORT, () => { console.log(`up on ${PORT}`) })
