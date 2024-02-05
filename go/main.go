@@ -3,12 +3,40 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 	"os"
 	"compare/handlers"
 )
 
 var myMap map[string]any
+
+func readFileHandlerChunk(w http.ResponseWriter, r *http.Request) {
+	const size = 100;
+
+	f, err := os.Open("some.txt")
+
+	if err != nil {
+		panic("cant open file")
+	}
+
+	bytes := make([]byte, size)
+
+	for {
+		bytesread, err := f.Read(bytes)
+
+		if err != nil {
+			if err == io.EOF {
+				return
+			}
+			fmt.Println(err)
+		}
+
+		w.Write(bytes[:bytesread])
+
+	}
+
+}
 
 func main() {
 		fmt.Println(os.Getpid())
@@ -23,6 +51,7 @@ func main() {
 		jsonHandler := handlers.ClosureJson(myMap)
 
     http.HandleFunc("/json-stringify", jsonHandler)
+    http.HandleFunc("/json-stringify", readFileHandlerChunk)
 
     http.ListenAndServe(":3000", nil)
 }
