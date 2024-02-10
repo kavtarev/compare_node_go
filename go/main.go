@@ -16,7 +16,7 @@ func main() {
 		downloadFileHandler := handlers.ClosureReadFileHandlerChunk(os.Args[1])
 
     http.HandleFunc("/json-stringify", jsonHandler)
-    http.HandleFunc("/download-files", downloadFileHandler)
+    http.HandleFunc("/download-file", downloadFileHandler)
 
     http.ListenAndServe(":3000", nil)
 }
