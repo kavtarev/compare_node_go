@@ -9,14 +9,14 @@ import (
 )
 
 func main() {
-		fmt.Println(os.Getpid())
-		myMap := utils.ReadJson(os.Args[1])
+	fmt.Println(os.Getpid())
+	myMap := utils.ReadJson(os.Args[1])
 
-		jsonHandler := handlers.ClosureJson(myMap)
-		downloadFileHandler := handlers.ClosureReadFileHandlerChunk(os.Args[1])
+	jsonHandler := handlers.ClosureJson(myMap)
+	downloadFileHandler := handlers.ClosureReadFileHandlerChunk(os.Args[1])
 
-    http.HandleFunc("/json-stringify", jsonHandler)
-    http.HandleFunc("/download-file", downloadFileHandler)
+	http.HandleFunc("/json-stringify", jsonHandler)
+	http.HandleFunc("/download-file", downloadFileHandler)
 
-    http.ListenAndServe(":3000", nil)
+	http.ListenAndServe(":3000", nil)
 }
