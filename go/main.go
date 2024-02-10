@@ -2,7 +2,6 @@ package main
 
 import (
 	"compare/handlers"
-	"compare/utils"
 	"fmt"
 	"net/http"
 	"os"
@@ -10,13 +9,10 @@ import (
 
 func main() {
 	fmt.Println(os.Getpid())
-	myMap := utils.ReadJson(os.Args[1])
 
-	jsonHandler := handlers.ClosureJson(myMap)
-	downloadFileHandler := handlers.ClosureReadFileHandlerChunk(os.Args[1])
-
-	http.HandleFunc("/json-stringify", jsonHandler)
-	http.HandleFunc("/download-file", downloadFileHandler)
+	http.HandleFunc("/json-stringify", handlers.ClosureJson(os.Args[1]))
+	http.HandleFunc("/download-file", handlers.ClosureReadFileHandlerChunk(os.Args[1]))
+	http.HandleFunc("/parse-xml", handlers.ClosureXmlHandler(os.Args[1]))
 
 	http.ListenAndServe(":3000", nil)
 }
