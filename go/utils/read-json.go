@@ -1,21 +1,24 @@
 package utils
 
 import (
+	"encoding/json"
 	"os"
-	"strings"
 )
 
-func ReadJson(name string) []byte {
-	var builder strings.Builder
-	builder.WriteString("../common/json/")
-	builder.WriteString(name)
-	builder.WriteString(".json")
-
-	file, err := os.ReadFile(builder.String())
+func ReadJson(name string) map[string]any {
+	file, err := os.ReadFile("../common/json/" + name + ".json")
 
 	if err != nil {
 		panic("no file found")
 	}
 
-	return file
+	var myMap map[string]any
+
+	jErr := json.Unmarshal(file, &myMap)
+
+	if jErr != nil {
+		panic(jErr)
+	}
+
+	return myMap
 }
