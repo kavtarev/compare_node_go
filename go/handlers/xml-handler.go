@@ -13,14 +13,39 @@ func ClosureXmlHandler(name string) func(w http.ResponseWriter, r *http.Request)
 		panic("cant open xml file")
 	}
 
-	var obj LargeXml
+	return pickHandler(name, file)
+}
 
-	res := func(w http.ResponseWriter, r *http.Request) {
-		xml.Unmarshal(file, &obj)
-		fmt.Fprint(w, obj.Catalogs.Mediums[0])
+func pickHandler(name string, file []byte) func(w http.ResponseWriter, r *http.Request) {
+	if name == "tiny" {
+		var obj TinyXml
+		return func(w http.ResponseWriter, r *http.Request) {
+			xml.Unmarshal(file, &obj)
+			fmt.Fprint(w, obj)
+		}
 	}
 
-	return res
+	if name == "small" {
+		var obj SmallXml
+		return func(w http.ResponseWriter, r *http.Request) {
+			xml.Unmarshal(file, &obj)
+			fmt.Fprint(w, obj)
+		}
+	}
+
+	if name == "medium" {
+		var obj MediumXml
+		return func(w http.ResponseWriter, r *http.Request) {
+			xml.Unmarshal(file, &obj)
+			fmt.Fprint(w, obj)
+		}
+	}
+
+	var obj LargeXml
+	return func(w http.ResponseWriter, r *http.Request) {
+		xml.Unmarshal(file, &obj)
+		fmt.Fprint(w, obj)
+	}
 }
 
 type TinyXml struct {
